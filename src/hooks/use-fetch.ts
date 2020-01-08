@@ -51,11 +51,12 @@ type UseFetchOptions<T> = {
   initialValue?: T;
   extractor?: (val: any) => T;
   debounceMS?: number;
+  disable?: boolean;
 } & RequestInit;
 
 export function useFetch<T = any>(
   url: string,
-  { initialValue, extractor, debounceMS, ...rest }: UseFetchOptions<T>
+  { initialValue, extractor, debounceMS, disable, body, ...rest }: UseFetchOptions<T>
 ) {
   const [state, dispatch] = useReducer<RequestReducer<T>, T>(reducer, initialValue as T, stateInitializer);
   const debouncedUrl = useDebounce(url, debounceMS);
@@ -76,13 +77,13 @@ export function useFetch<T = any>(
         dispatch({ type: "FAILED", error: e });
       }
     }
-    if (debouncedUrl) {
+    if (!disable && debouncedUrl) {
       startFetch();
     }
 
     return () => {
       cancelFetch = true;
     };
-  }, [debouncedUrl]);
+  }, [debouncedUrl, disable, body]);
   return state;
 }
