@@ -2,7 +2,7 @@ import { useEffect, useReducer, Reducer } from "react";
 import { useDebounce } from "./use-debounce";
 
 interface RequestState<T> {
-  response?: T;
+  response: T;
   isLoading: boolean;
   error: any;
 }
@@ -12,7 +12,7 @@ type RequestAction<T> =
   | { type: "REQUEST" };
 type RequestReducer<T> = Reducer<RequestState<T>, RequestAction<T>>;
 
-function stateInitializer<T>(initialValue?: T): RequestState<T> {
+function stateInitializer<T>(initialValue: T): RequestState<T> {
   return {
     response: initialValue,
     isLoading: false,
@@ -57,7 +57,7 @@ export function useFetch<T = any>(
   url: string,
   { initialValue, extractor, debounceMS, ...rest }: UseFetchOptions<T>
 ) {
-  const [state, dispatch] = useReducer<RequestReducer<T>, T>(reducer, initialValue, stateInitializer);
+  const [state, dispatch] = useReducer<RequestReducer<T>, T>(reducer, initialValue as T, stateInitializer);
   const debouncedUrl = useDebounce(url, debounceMS);
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export function useFetch<T = any>(
         const response = await fetch(url, rest);
         const json = await response.json();
         if (!cancelFetch) {
-          const extractedValue = extractor ? extractor(json) : json;
+          const extractedValue: T = extractor ? extractor(json) : json;
           dispatch({ type: "SUCCEEDED", response: extractedValue });
         }
       } catch (e) {

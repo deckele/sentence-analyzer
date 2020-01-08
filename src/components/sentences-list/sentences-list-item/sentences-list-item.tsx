@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { Span } from "./span/span";
 
 interface SentencesListItemProps {
     id: string;
@@ -6,8 +7,9 @@ interface SentencesListItemProps {
 }
 
 export const SentencesListItem: FC<SentencesListItemProps> = ({ id, words }) => {
+    
     return (
-        <li>
+        <li onClick={handleSentenceClicked}>
 
         </li>
     );
