@@ -1,12 +1,15 @@
 .input-with-icon {
-    border: solid 1px #c8bfbf;
-    border-radius: 4px;
     padding: 10px;
     display: inline-flex;
     align-items: center;
+    background-color: #f5f8fa;
+    border-radius: 21px;
+    border: 1px solid #e6ecf0;
+    color: #14171a;
     input {
       border: none;
       outline: none;
+      background-color: transparent;
       margin-left: 5px;
     }
     .icon {
