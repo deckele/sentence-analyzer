@@ -11,8 +11,10 @@ const App: React.FC = () => {
       <header className="app-header">
         <h1 className="app-title">Sentence Analyzer</h1>
       </header>
-      <main>
+      <section className="app-controls-section">
         <Search value={search} onChange={setSearch} />
+      </section>
+      <main>
         <SentencesList search={search} />
       </main>
     </div>

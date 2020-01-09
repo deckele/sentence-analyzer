@@ -1,0 +1,20 @@
+.sentence-list-item {
+    border: 1px solid #e6ecf0;
+    background-color: white;
+    margin-top: 20px;
+    line-height: 3em;
+    position: relative;
+    box-sizing: border-box;
+    padding: 20px;
+    &:hover {
+        color: #657786;
+    }
+    &.anotations-hidden {
+        .span-label {
+            visibility: hidden;
+            &+.span-words {
+                border-top: hidden;
+            }
+        }
+    }
+}

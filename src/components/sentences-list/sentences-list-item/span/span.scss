@@ -1,0 +1,28 @@
+.span-wrapper {
+    position: relative;
+    margin-right: 5px;
+    &.labeled-span {
+        white-space: nowrap;
+        .span-words {
+            border-top: 1px solid black;
+            border-radius: 8px;
+        }
+    }
+    .span-label {
+        color: black;
+        position: absolute;
+        top: -120%;
+        left: 50%;
+        transform: translate(-50%);
+        line-height: initial;
+        min-width: 100%;
+        text-align: center;
+        border-radius: 4px;
+        font-size: 12px;
+        padding: 2px 5px;
+        box-sizing: border-box;
+    }
+    .span-words {
+        padding-top: 2px;
+    }
+}

@@ -23,7 +23,7 @@ export const Search: FC<SearchProps> = ({ value, onChange }) => {
     <form onSubmit={handleSubmit}>
       <span className="input-with-icon">
         <FaSearch className="icon" onClick={() => handleSubmit} />
-        <input type="text" onChange={handleSearchChange} value={value} />
+        <input type="text" onChange={handleSearchChange} value={value} placeholder="Search for a word..." />
         <IoMdClose className={classnames("icon", {hidden: !value})} onClick={handleDeleteInput} />
       </span>
     </form>

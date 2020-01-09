@@ -2,6 +2,9 @@ import React, { FC, useState, useMemo } from "react";
 import { Span } from "./span/span";
 import { useGetSentenceSpans } from "../../../hooks/use-sentences-api";
 import { SentenceSpan } from "../../../contracts";
+import classNames from "classnames";
+import "./sentences-list-item.scss";
+import { Spinner } from "../../spinner/spinner";
 
 interface SentencesListItemProps {
     sentenceId: string;
@@ -24,8 +27,7 @@ function constructAnotatedSentence(spans: SentenceSpan[], words: string[]) {
         if (anotatedSpan.length > 0) {
             spansToRender.push(<Span key={start} words={anotatedSpan} label={label} />);
         }
-        if(i >= spans.length) {
-            console.log("last!!");
+        if(i === spans.length - 1) {
             const notAnotatedSpanAtEnd = words.slice(end);
             if (notAnotatedSpanAtEnd.length > 0) {
                 spansToRender.push(<Span key={end} words={notAnotatedSpanAtEnd} />);
@@ -38,7 +40,9 @@ function constructAnotatedSentence(spans: SentenceSpan[], words: string[]) {
 
 export const SentencesListItem: FC<SentencesListItemProps> = ({ sentenceId, words }) => {
     const [ disableFetch, setDisableFetch ] = useState(true);
-    const { response: spans } = useGetSentenceSpans(sentenceId, disableFetch);
+    const [ showAnotations, setShowAnotations ] = useState(false);
+    const { response: spans, isLoading } = useGetSentenceSpans(sentenceId, disableFetch);
+    console.log(isLoading)
     const spansToRender = useMemo(() => 
         constructAnotatedSentence(spans, words), 
         [spans, words]
@@ -46,10 +50,17 @@ export const SentencesListItem: FC<SentencesListItemProps> = ({ sentenceId, word
 
     function handleSentenceClicked() {
         setDisableFetch(false);
+        setShowAnotations(prevShow => !prevShow);
     }
 
+    const listItemClassName = classNames(
+        "sentence-list-item", 
+        {"anotations-hidden": !showAnotations}
+    );
+
     return (
-        <li onClick={handleSentenceClicked}>
+        <li className={listItemClassName} onClick={handleSentenceClicked}>
+            {isLoading ? <Spinner /> : null}
             {spansToRender}
         </li>
     );
